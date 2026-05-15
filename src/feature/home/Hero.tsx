@@ -2,14 +2,14 @@ import { Container } from "@/components/layout/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { ArrowRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useShop } from "@/context/ShopContext";
+import { useShop } from "@/feature/shop/context/ShopContext";
 import { Autoplay } from "swiper/modules";
 import type { Book } from "@/types";
-import { BookCard } from "@/components/common/BookCard";
+import { BookCard, BookCardSkeleton } from "@/components/common/BookCard";
 
 const Hero = () => {
-  const { books } = useShop();
-  const popularBooks = books.slice(3, 8);
+  const { books, isLoading } = useShop();
+  const popularBooks = books.slice(4, 8);
 
   return (
     <section className="relative overflow-hidden">
@@ -18,7 +18,7 @@ const Hero = () => {
       <Container className="relative z-10 pt-28 pb-16 lg:pt-36 lg:pb-24">
         <div className="flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-16">
           <BannerHero />
-          <BannerSpin popularBooks={popularBooks} />
+          <BannerSpin popularBooks={popularBooks} isLoading={isLoading} />
         </div>
     </Container>
     </section>
@@ -54,7 +54,7 @@ const BannerHero = () => {
   );
 };
 
-const BannerSpin = ({ popularBooks }: { popularBooks: Book[] }) => {
+const BannerSpin = ({ popularBooks, isLoading }: { popularBooks: Book[]; isLoading: boolean }) => {
   return (
     <aside className="hidden shrink-0 lg:block lg:w-80 xl:w-96">
       <div className="animate-fade-in-up stagger-3">
@@ -66,11 +66,17 @@ const BannerSpin = ({ popularBooks }: { popularBooks: Book[] }) => {
           modules={[Autoplay]}
           className="min-h-105"
         >
-          {popularBooks.map((book) => (
-            <SwiperSlide key={book._id}>
-              <BookCard book={book} />
-            </SwiperSlide>
-          ))}
+          {isLoading
+            ? Array.from({ length: 5 }).map((_, i) => (
+                <SwiperSlide key={`hero-skel-${i}`}>
+                  <BookCardSkeleton />
+                </SwiperSlide>
+              ))
+            : popularBooks.map((book) => (
+                <SwiperSlide key={book._id}>
+                  <BookCard book={book} />
+                </SwiperSlide>
+              ))}
         </Swiper>
       </div>
     </aside>

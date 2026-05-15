@@ -1,13 +1,13 @@
 import { useMemo, useState } from "react";
 import { Container } from "@/components/layout/Container";
 import { SectionHeader, SHTitle, SHDescription } from "@/components/common/SectionHeader";
-import { useShop } from "@/context/ShopContext";
+import { useShop } from "@/feature/shop/context/ShopContext";
 import { Pagination } from "@/feature/shop/Pagination";
 import CategoryFilter from "@/feature/shop/CategoryFilter";
 import { BookGrid } from "@/feature/shop/BookGrid";
 
 const Shop = () => {
-  const { filteredBooks: books, category, setCategory } = useShop();
+  const { filteredBooks: books, category, setCategory, isLoading } = useShop();
   const [currentPage, setCurrentPage] = useState(1);
   const booksPerPage = 10;
 
@@ -31,7 +31,7 @@ const Shop = () => {
         <SHDescription content="Explore our complete collection — filter by category to find exactly what you're looking for" />
       </SectionHeader>
       <CategoryFilter category={category} setCategory={handleSetCategory} />
-      <BookGrid currentBooks={currentBooks} />
+      <BookGrid currentBooks={currentBooks} isLoading={isLoading} />
       <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
     </Container>
   );

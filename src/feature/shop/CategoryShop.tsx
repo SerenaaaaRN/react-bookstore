@@ -1,14 +1,14 @@
 import { useParams } from "react-router-dom";
 import { Container } from "@/components/layout/Container";
 import { SectionHeader, SHTitle, SHDescription } from "@/components/common/SectionHeader";
-import { useShop } from "@/context/ShopContext";
+import { useShop } from "@/feature/shop/context/ShopContext";
 import { BookGrid } from "@/feature/shop/BookGrid";
 import { useMemo } from "react";
 import type { Book } from "@/types";
 
 const CategoryShop = () => {
   const { category } = useParams();
-  const { books } = useShop();
+  const { books, isLoading } = useShop();
 
   const filteredBooks = useMemo(() => {
     if (!category) return books;
@@ -21,7 +21,7 @@ const CategoryShop = () => {
         <SHTitle title={category || "Category"} color="Collection" />
         <SHDescription content={`Browsing ${filteredBooks.length} books in the ${category} category`} />
       </SectionHeader>
-      <BookGrid currentBooks={filteredBooks} />
+      <BookGrid currentBooks={filteredBooks} isLoading={isLoading} />
     </Container>
   );
 };

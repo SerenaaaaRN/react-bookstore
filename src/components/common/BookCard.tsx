@@ -5,7 +5,8 @@ import { ButtonLink } from "../ui/Button";
 import { Badge } from "../ui/Badge";
 import type { Book } from "@/types";
 import { ShoppingBag } from "lucide-react";
-import { useShop } from "@/context/ShopContext";
+import { useShop } from "@/feature/shop/context/ShopContext";
+import { Skeleton } from "../ui/Skeleton";
 
 type BookCardProps = ComponentProps<"div"> & {
   book: Book;
@@ -59,4 +60,32 @@ const BookCard = ({ className, book, ...props }: BookCardProps) => {
   );
 };
 
-export { BookCard };
+const BookCardSkeleton = ({ className, ...props }: ComponentProps<"div">) => {
+  return (
+    <Card className={cn("group overflow-hidden", className)} {...props}>
+      <div className="relative flex h-72 items-center justify-center overflow-hidden bg-secondary p-6">
+        <Skeleton className="absolute top-3 left-3 z-10 h-5 w-16" />
+        <Skeleton className="h-full w-32" />
+      </div>
+
+      <CardContent className="flex flex-1 flex-col gap-3 p-5">
+        <div className="flex items-start justify-between gap-3">
+          <Skeleton className="h-5 w-24" />
+          <Skeleton className="h-5 w-12" />
+        </div>
+
+        <div className="space-y-1">
+          <Skeleton className="h-3 w-full" />
+          <Skeleton className="h-3 w-4/5" />
+        </div>
+
+        <div className="mt-auto flex items-end justify-between gap-2 pt-2">
+          <Skeleton className="h-3 w-20" />
+          <Skeleton className="h-6 w-16 rounded-full" />
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+export { BookCard, BookCardSkeleton };

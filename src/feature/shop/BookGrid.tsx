@@ -1,15 +1,22 @@
-import { BookCard } from "@/components/common/BookCard";
+import { BookCard, BookCardSkeleton } from "@/components/common/BookCard";
 import { BookOpen } from "lucide-react";
 import type { Book } from "@/types";
 
 type BookGridProps = {
   currentBooks: Book[];
+  isLoading?: boolean;
 };
 
-const BookGrid = ({ currentBooks }: BookGridProps) => {
+const BookGrid = ({ currentBooks, isLoading }: BookGridProps) => {
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-      {currentBooks.length > 0 ? (
+      {isLoading ? (
+        Array.from({ length: 10 }).map((_, i) => (
+          <div key={`skel-${i}`} className="animate-fade-in-up" style={{ animationDelay: `${i * 0.05}s` }}>
+            <BookCardSkeleton />
+          </div>
+        ))
+      ) : currentBooks.length > 0 ? (
         currentBooks.map((book, index) => (
           <div key={book._id} className="animate-fade-in-up" style={{ animationDelay: `${index * 0.05}s` }}>
             <BookCard book={book} />

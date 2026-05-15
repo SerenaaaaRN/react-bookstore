@@ -21,7 +21,7 @@ const FooterBrand = () => (
   <div className="flex flex-col gap-8 md:col-span-5">
     <Link to="/" className="group flex w-fit items-center gap-2">
       <div className="flex items-baseline text-3xl font-bold tracking-tight">
-        Serena<span className="text-accent text-5xl leading-none">.</span>
+        Rillah<span className="text-accent text-5xl leading-none">.</span>
       </div>
     </Link>
 

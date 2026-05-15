@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { ShoppingCart, Menu, X } from "lucide-react";
-import { useShop } from "@/context/ShopContext";
+import { useShop } from "@/feature/shop/context/ShopContext";
 import { SearchBar } from "../common/SearchBar";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";

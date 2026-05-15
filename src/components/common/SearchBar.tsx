@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/Input";
 import { Search, X } from "lucide-react";
-import { useShop } from "@/context/ShopContext";
+import { useShop } from "@/feature/shop/context/ShopContext";
 import { Button } from "@/components/ui/Button";
 
 const SearchBar = () => {

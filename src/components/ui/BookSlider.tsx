@@ -1,16 +1,17 @@
 import { Swiper, SwiperSlide, type SwiperProps } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
-import { BookCard } from "@/components/common/BookCard";
+import { BookCard, BookCardSkeleton } from "@/components/common/BookCard";
 import type { Book } from "@/types";
 
 type BookSliderProps = SwiperProps & {
   books: Book[];
   fromHero?: string;
   className?: string;
+  isLoading?: boolean;
 };
 
-const BookSlider = ({ className = "min-h-80", books, fromHero, ...props }: BookSliderProps) => {
+const BookSlider = ({ className = "min-h-80", books, fromHero, isLoading, ...props }: BookSliderProps) => {
   return (
     <div className="relative">
       <div className="pointer-events-none absolute top-0 left-0 z-10 h-full w-12 bg-background/80 to-transparent [mask-image:linear-gradient(to_right,black,transparent)]" />
@@ -27,11 +28,17 @@ const BookSlider = ({ className = "min-h-80", books, fromHero, ...props }: BookS
         className={className}
         {...props}
       >
-        {books.map((book) => (
-          <SwiperSlide key={book._id}>
-            <BookCard book={book} />
-          </SwiperSlide>
-        ))}
+        {isLoading
+          ? Array.from({ length: 5 }).map((_, i) => (
+              <SwiperSlide key={`skeleton-${i}`}>
+                <BookCardSkeleton />
+              </SwiperSlide>
+            ))
+          : books.map((book) => (
+              <SwiperSlide key={book._id}>
+                <BookCard book={book} />
+              </SwiperSlide>
+            ))}
       </Swiper>
     </div>
   );

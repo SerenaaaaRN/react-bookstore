@@ -1,10 +1,10 @@
-import { useShop } from "@/context/ShopContext";
+import { useShop } from "@/feature/shop/context/ShopContext";
 import { BookSlider } from "@/components/ui/BookSlider";
 import { Container } from "@/components/layout/Container";
 import { SectionHeader, SHTitle, SHDescription } from "@/components/common/SectionHeader";
 
 const NewArrivals = () => {
-  const { books } = useShop();
+  const { books, isLoading } = useShop();
   const newArrivals = books.slice(13, 20);
 
   return (
@@ -13,7 +13,7 @@ const NewArrivals = () => {
         <SHTitle title="New" color="Arrivals" />
         <SHDescription content="Fresh additions to our shelves — discover the latest books arriving weekly with captivating stories" />
       </SectionHeader>
-      <BookSlider books={newArrivals} />
+      <BookSlider books={newArrivals} isLoading={isLoading} />
     </Container>
   );
 };
