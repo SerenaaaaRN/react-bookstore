@@ -1,20 +1,20 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { Container } from "@/components/layout/Container";
-import { useShop } from "@/feature/shop/context/ShopContext";
+import { useShopStore } from "@/store/useShopStore";
 import { Button } from "@/components/ui/Button";
 import { ChevronLeft } from "lucide-react";
-import type { Book } from "@/types";
-import { ProductSkeleton } from "@/feature/shop/components/product/ProductSkeleton";
-import { ProductNotFound } from "@/feature/shop/components/product/ProductNotFound";
-import { ProductCover } from "@/feature/shop/components/product/ProductCover";
-import { ProductInfo } from "@/feature/shop/components/product/ProductInfo";
+import { ProductSkeleton } from "@/components/shop/ProductSkeleton";
+import { ProductNotFound } from "@/components/shop/ProductNotFound";
+import { ProductCover } from "@/components/shop/ProductCover";
+import { ProductInfo } from "@/components/shop/ProductInfo";
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const { books, currency, isLoading } = useShop();
+  const currency = useShopStore((state) => state.currency);
+  const isLoading = useShopStore((state) => state.isLoading);
+  const booksById = useShopStore((state) => state.booksById);
   const navigate = useNavigate();
-
-  const book = (books as Book[]).find((b: Book) => b._id === id);
+  const book = id ? booksById[id] : undefined;
 
   if (isLoading) {
     return <ProductSkeleton />;

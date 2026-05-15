@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/Input";
 import { Search, X } from "lucide-react";
-import { useShop } from "@/feature/shop/context/ShopContext";
+import { useShopStore } from "@/store/useShopStore";
 import { Button } from "@/components/ui/Button";
 
 const SearchBar = () => {
   const [showSearch, setShowSearch] = useState<boolean>(false);
-  const { setSearchTerm } = useShop();
+  const setSearchTerm = useShopStore((state) => state.setSearchTerm);
 
   return (
     <div className="relative hidden items-center xl:flex">

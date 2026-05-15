@@ -1,11 +1,12 @@
 import type { ComponentProps } from "react";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
+
 import { Card, CardContent } from "@/components/ui/Card";
 import { ButtonLink } from "../ui/Button";
 import { Badge } from "../ui/Badge";
-import type { Book } from "@/types";
+import type { Book } from "@/types/book";
 import { ShoppingBag } from "lucide-react";
-import { useShop } from "@/feature/shop/context/ShopContext";
+import { useShopStore } from "@/store/useShopStore";
 import { Skeleton } from "../ui/Skeleton";
 
 type BookCardProps = ComponentProps<"div"> & {
@@ -13,13 +14,12 @@ type BookCardProps = ComponentProps<"div"> & {
 };
 
 const BookCard = ({ className, book, ...props }: BookCardProps) => {
-  const { currency } = useShop();
+  const currency = useShopStore((state) => state.currency);
 
   return (
     <Card className={cn("group overflow-hidden", className)} {...props}>
-
-      <div className="relative flex h-72 items-center justify-center overflow-hidden bg-secondary p-6">
-        <Badge variant="ghost" className="absolute top-3 left-3 z-10 bg-background/90 text-xs backdrop-blur-sm">
+      <div className="bg-secondary relative flex h-72 items-center justify-center overflow-hidden p-6">
+        <Badge variant="ghost" className="bg-background/90 absolute top-3 left-3 z-10 text-xs backdrop-blur-sm">
           {book.category.name}
         </Badge>
         <img
@@ -34,10 +34,9 @@ const BookCard = ({ className, book, ...props }: BookCardProps) => {
 
       <CardContent className="flex flex-1 flex-col gap-3 p-5">
         <div className="flex items-start justify-between gap-3">
-          <h4 className="line-clamp-2 text-lg font-bold leading-tight tracking-tight">{book.title}</h4>
+          <h4 className="line-clamp-2 text-lg leading-tight font-bold tracking-tight">{book.title}</h4>
           <p className="text-accent shrink-0 text-lg font-bold">
-            {currency}
-            {book.details.price.replace("Rp ", "")}
+            {currency} {formatPrice(book.details.price)}
           </p>
         </div>
 
@@ -63,7 +62,7 @@ const BookCard = ({ className, book, ...props }: BookCardProps) => {
 const BookCardSkeleton = ({ className, ...props }: ComponentProps<"div">) => {
   return (
     <Card className={cn("group overflow-hidden", className)} {...props}>
-      <div className="relative flex h-72 items-center justify-center overflow-hidden bg-secondary p-6">
+      <div className="bg-secondary relative flex h-72 items-center justify-center overflow-hidden p-6">
         <Skeleton className="absolute top-3 left-3 z-10 h-5 w-16" />
         <Skeleton className="h-full w-32" />
       </div>

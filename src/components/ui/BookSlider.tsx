@@ -2,7 +2,8 @@ import { Swiper, SwiperSlide, type SwiperProps } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import { BookCard, BookCardSkeleton } from "@/components/common/BookCard";
-import type { Book } from "@/types";
+import type { Book } from "@/types/book";
+
 
 type BookSliderProps = SwiperProps & {
   books: Book[];

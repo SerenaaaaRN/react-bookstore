@@ -1,9 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ShoppingBag, Star } from "lucide-react";
-import type { Book } from "@/types";
-import { useShop } from "@/feature/shop/context/ShopContext";
+import type { Book } from "@/types/book";
+import { useShopStore } from "@/store/useShopStore";
 import { toast } from "sonner";
+import { formatPrice } from "@/lib/utils";
+
 
 const DetailItem = ({ label, value }: { label: string; value: string }) => (
   <div>
@@ -13,7 +16,8 @@ const DetailItem = ({ label, value }: { label: string; value: string }) => (
 );
 
 const ProductInfo = ({ book, currency }: { book: Book; currency: string }) => {
-  const { addToCart } = useShop();
+  const addToCart = useShopStore((state) => state.addToCart);
+  const navigate = useNavigate();
 
   const handleAddToCart = () => {
     addToCart(book);
@@ -21,7 +25,7 @@ const ProductInfo = ({ book, currency }: { book: Book; currency: string }) => {
       description: "You can view your cart or continue shopping.",
       action: {
         label: "View Cart",
-        onClick: () => window.location.href = "/cart",
+        onClick: () => navigate("/cart"),
       },
     });
   };
@@ -39,8 +43,7 @@ const ProductInfo = ({ book, currency }: { book: Book; currency: string }) => {
         <h1 className="text-4xl leading-tight font-bold tracking-tight md:text-5xl">{book.title}</h1>
         <p className="text-muted-foreground text-lg font-medium">{book.author.name}</p>
         <p className="text-accent text-3xl font-bold">
-          {currency}
-          {book.details.price.replace("Rp ", "")}
+          {currency} {formatPrice(book.details.price)}
         </p>
       </div>
 

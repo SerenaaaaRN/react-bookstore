@@ -8,7 +8,7 @@ const ProductSkeleton = () => {
 
       <div className="flex flex-col gap-12 lg:flex-row lg:gap-16">
         <div className="bg-secondary shadow-warm flex flex-1 items-center justify-center rounded-3xl p-12 lg:p-16">
-          <Skeleton className="h-[500px] w-full max-w-sm rounded-lg" />
+          <Skeleton className="h-125 w-full max-w-sm rounded-lg" />
         </div>
 
         <div className="flex flex-1 flex-col gap-6">
@@ -23,14 +23,14 @@ const ProductSkeleton = () => {
             <Skeleton className="h-10 w-32" />
           </div>
 
-          <div className="space-y-3 mt-4">
+          <div className="mt-4 space-y-3">
             <Skeleton className="h-6 w-24" />
             <Skeleton className="h-4 w-full" />
             <Skeleton className="h-4 w-full" />
             <Skeleton className="h-4 w-5/6" />
           </div>
 
-          <div className="border-border bg-muted/30 grid grid-cols-2 gap-4 rounded-2xl border p-6 mt-4">
+          <div className="border-border bg-muted/30 mt-4 grid grid-cols-2 gap-4 rounded-2xl border p-6">
             {[1, 2, 3, 4].map((i) => (
               <div key={i}>
                 <Skeleton className="mb-2 h-4 w-16" />

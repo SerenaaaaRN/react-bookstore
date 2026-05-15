@@ -1,13 +1,13 @@
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/provider/theme-provider";
 import { Toaster } from "@/components/ui/Sonner";
-import Home from "@/feature/home/Home";
-import Shop from "@/feature/shop/Shop";
-import Blog from "@/feature/blog/Blog";
-import Contact from "@/feature/contact/Contact";
-import Cart from "@/feature/shop/Cart";
-import CategoryShop from "@/feature/shop/CategoryShop";
-import ProductDetails from "@/feature/shop/ProductDetails";
+import Home from "@/pages/Home";
+import Shop from "@/pages/Shop";
+import Blog from "@/pages/Blog";
+import Contact from "@/pages/Contact";
+import Cart from "@/pages/Cart";
+import CategoryShop from "@/pages/CategoryShop";
+import ProductDetails from "@/pages/ProductDetails";
 import NotFound from "@/pages/NotFound";
 import DemoPage from "@/pages/DemoPage";
 import Navbar from "@/components/layout/Navbar";
@@ -27,7 +27,6 @@ const App = () => {
             <Route path="/blog" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/cart" element={<Cart />} />
-
             <Route path="/DemoPage" element={<DemoPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

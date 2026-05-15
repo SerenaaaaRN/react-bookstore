@@ -2,13 +2,14 @@ import { Container } from "@/components/layout/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { ArrowRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useShop } from "@/feature/shop/context/ShopContext";
+import { useShopStore } from "@/store/useShopStore";
 import { Autoplay } from "swiper/modules";
-import type { Book } from "@/types";
+import type { Book } from "@/types/book";
 import { BookCard, BookCardSkeleton } from "@/components/common/BookCard";
 
 const Hero = () => {
-  const { books, isLoading } = useShop();
+  const books = useShopStore((state) => state.books);
+  const isLoading = useShopStore((state) => state.isLoading);
   const popularBooks = books.slice(4, 8);
 
   return (
@@ -20,7 +21,7 @@ const Hero = () => {
           <BannerHero />
           <BannerSpin popularBooks={popularBooks} isLoading={isLoading} />
         </div>
-    </Container>
+      </Container>
     </section>
   );
 };
@@ -68,15 +69,15 @@ const BannerSpin = ({ popularBooks, isLoading }: { popularBooks: Book[]; isLoadi
         >
           {isLoading
             ? Array.from({ length: 5 }).map((_, i) => (
-                <SwiperSlide key={`hero-skel-${i}`}>
-                  <BookCardSkeleton />
-                </SwiperSlide>
-              ))
+              <SwiperSlide key={`hero-skel-${i}`}>
+                <BookCardSkeleton />
+              </SwiperSlide>
+            ))
             : popularBooks.map((book) => (
-                <SwiperSlide key={book._id}>
-                  <BookCard book={book} />
-                </SwiperSlide>
-              ))}
+              <SwiperSlide key={book._id}>
+                <BookCard book={book} />
+              </SwiperSlide>
+            ))}
         </Swiper>
       </div>
     </aside>

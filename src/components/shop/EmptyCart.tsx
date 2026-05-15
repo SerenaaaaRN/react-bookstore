@@ -12,7 +12,8 @@ const EmptyCart = () => {
       </div>
       <h2 className="mb-3 text-3xl font-bold">Your cart is empty</h2>
       <p className="text-muted-foreground mb-10 max-w-sm text-base leading-relaxed">
-        Looks like you haven't added any books to your cart yet. Discover our curated collection and find your next read.
+        Looks like you haven't added any books to your cart yet. Discover our curated collection and find your next
+        read.
       </p>
       <Button variant="accent" size="lg" onClick={() => navigate("/shop")} className="flex items-center gap-3">
         Start Shopping

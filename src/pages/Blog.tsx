@@ -1,7 +1,7 @@
 import { Container } from "@/components/layout/Container";
 import { SectionHeader, SHTitle, SHDescription } from "@/components/common/SectionHeader";
 import { blogs } from "@/constant/blogs";
-import { BlogCard } from "@/feature/blog/BlogCard";
+import { BlogCard } from "@/components/blog/BlogCard";
 
 const Blog = () => {
   return (

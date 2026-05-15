@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { ShoppingCart, Menu, X } from "lucide-react";
-import { useShop } from "@/feature/shop/context/ShopContext";
+import { useShopStore } from "@/store/useShopStore";
 import { SearchBar } from "../common/SearchBar";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -15,9 +15,11 @@ const navLinks = [
 ];
 
 const Navbar = () => {
-  const { cartItems } = useShop();
+  const cartItems = useShopStore((state) => state.cartItems);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+
+  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <>
@@ -58,9 +60,9 @@ const Navbar = () => {
               aria-label="Shopping cart"
             >
               <ShoppingCart className="size-5" />
-              {cartItems?.length > 0 ? (
+              {totalItems > 0 ? (
                 <span className="bg-accent shadow-warm-sm animate-fade-in absolute -top-0.5 -right-0.5 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-bold text-white">
-                  {cartItems.length}
+                  {totalItems}
                 </span>
               ) : null}
             </Link>

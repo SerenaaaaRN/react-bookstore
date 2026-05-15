@@ -1,23 +1,36 @@
 import { useMemo, useState } from "react";
 import { Container } from "@/components/layout/Container";
 import { SectionHeader, SHTitle, SHDescription } from "@/components/common/SectionHeader";
-import { useShop } from "@/feature/shop/context/ShopContext";
-import { Pagination } from "@/feature/shop/Pagination";
-import CategoryFilter from "@/feature/shop/CategoryFilter";
-import { BookGrid } from "@/feature/shop/BookGrid";
+import { useShopStore } from "@/store/useShopStore";
+import { Pagination } from "@/components/ui/Pagination";
+import CategoryFilter from "@/components/shop/CategoryFilter";
+import { BookGrid } from "@/components/shop/BookGrid";
 
 const Shop = () => {
-  const { filteredBooks: books, category, setCategory, isLoading } = useShop();
+  const books = useShopStore((state) => state.books);
+  const category = useShopStore((state) => state.category);
+  const setCategory = useShopStore((state) => state.setCategory);
+  const searchTerm = useShopStore((state) => state.searchTerm);
+  const isLoading = useShopStore((state) => state.isLoading);
+
   const [currentPage, setCurrentPage] = useState(1);
   const booksPerPage = 10;
+
+  const filteredBooks = useMemo(() => {
+    return books.filter((book) => {
+      const titleMatch = book.title.toLowerCase().includes(searchTerm.toLowerCase());
+      const categoryMatch = category === "All" || book.category.name === category;
+      return titleMatch && categoryMatch;
+    });
+  }, [books, searchTerm, category]);
 
   const currentBooks = useMemo(() => {
     const indexOfLastPage = currentPage * booksPerPage;
     const indexOfFirstPage = indexOfLastPage - booksPerPage;
-    return books.slice(indexOfFirstPage, indexOfLastPage);
-  }, [books, currentPage]);
+    return filteredBooks.slice(indexOfFirstPage, indexOfLastPage);
+  }, [filteredBooks, currentPage]);
 
-  const totalPage = Math.ceil(books.length / booksPerPage);
+  const totalPage = Math.ceil(filteredBooks.length / booksPerPage);
 
   const handleSetCategory = (newCategory: string) => {
     setCategory(newCategory);

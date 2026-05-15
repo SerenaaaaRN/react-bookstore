@@ -1,10 +1,11 @@
-import { useShop } from "@/feature/shop/context/ShopContext";
+import { useShopStore } from "@/store/useShopStore";
 import { BookSlider } from "@/components/ui/BookSlider";
 import { Container } from "@/components/layout/Container";
 import { SectionHeader, SHTitle, SHDescription } from "@/components/common/SectionHeader";
 
 const NewArrivals = () => {
-  const { books, isLoading } = useShop();
+  const books = useShopStore((state) => state.books);
+  const isLoading = useShopStore((state) => state.isLoading);
   const newArrivals = books.slice(13, 20);
 
   return (

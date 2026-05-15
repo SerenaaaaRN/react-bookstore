@@ -1,6 +1,6 @@
 import { BookCard, BookCardSkeleton } from "@/components/common/BookCard";
 import { BookOpen } from "lucide-react";
-import type { Book } from "@/types";
+import type { Book } from "@/types/book";
 
 type BookGridProps = {
   currentBooks: Book[];

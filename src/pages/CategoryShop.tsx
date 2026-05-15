@@ -1,14 +1,15 @@
 import { useParams } from "react-router-dom";
 import { Container } from "@/components/layout/Container";
 import { SectionHeader, SHTitle, SHDescription } from "@/components/common/SectionHeader";
-import { useShop } from "@/feature/shop/context/ShopContext";
-import { BookGrid } from "@/feature/shop/BookGrid";
+import { useShopStore } from "@/store/useShopStore";
+import { BookGrid } from "@/components/shop/BookGrid";
 import { useMemo } from "react";
-import type { Book } from "@/types";
+import type { Book } from "@/types/book";
 
 const CategoryShop = () => {
   const { category } = useParams();
-  const { books, isLoading } = useShop();
+  const books = useShopStore((state) => state.books);
+  const isLoading = useShopStore((state) => state.isLoading);
 
   const filteredBooks = useMemo(() => {
     if (!category) return books;

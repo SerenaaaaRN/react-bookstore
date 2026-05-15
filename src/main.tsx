@@ -2,12 +2,12 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
-import { ShopContextProvider } from "@/feature/shop/context/ShopContext";
+import { useShopStore } from "@/store/useShopStore";
+
+useShopStore.getState().fetchBooks();
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
-    <ShopContextProvider>
-      <App />
-    </ShopContextProvider>
+    <App />
   </BrowserRouter>
 );

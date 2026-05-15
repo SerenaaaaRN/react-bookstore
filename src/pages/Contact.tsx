@@ -1,8 +1,8 @@
 import { Container } from "@/components/layout/Container";
 import { SectionHeader, SHTitle, SHDescription } from "@/components/common/SectionHeader";
 import { Mail, Map, Phone, Clock } from "lucide-react";
-import { ContactForm } from "@/feature/contact/ContactForm";
-import { ContactItem } from "@/feature/contact/ContactItem";
+import { ContactForm } from "@/components/contact/ContactForm";
+import { ContactItem } from "@/components/contact/ContactItem";
 
 const Contact = () => {
   return (

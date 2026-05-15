@@ -5,33 +5,24 @@ A platform for selling books with a wide variety of titles; this is a dummy proj
 ## Tech Stack
 
 - **Framework:** React 19 (Vite)
-- **Routing:** React Router DOM
 - **Language:** TypeScript
-- **Styling:** Tailwind CSS v4.2
-- **Routing:** React Router
-- **State Management:** React Context API
-- **UI Components:** Swiper, Lucide React
-- **Theming:** Next Themes
+- **Styling:** Tailwind CSS v4
+- **State Management:** Zustand
+- **API:** Google Books API
+- **Routing:** React Router 7
+- **UI Libraries:** Lucide React, Swiper, Sonner
+- **Theming:** Next Themes (Dark/Light mode)
 
+## 📁 Folder Structure
 
-## Structure Folder
-
-```
+```text
 src/
-├───components
-│   ├───common
-│   ├───layout
-│   └───ui
-├───constant
-├───context
-├───feature
-│   ├───blog
-│   ├───contact
-│   ├───home
-│   └───shop
-├───hooks
-├───lib
-├───pages
-├───provider
-└───types
+├── components/         # Organized UI blocks (home, shop, blog, contact)
+├── constant/           # Mock data and navigation configs
+├── hooks/              # Custom React hooks
+├── lib/                # Shared utilities (cn, etc.)
+├── pages/              # Main route components
+├── provider/           # Global context providers (Theme)
+├── store/              # Zustand global state management
+└── types/              # TypeScript definitions
 ```

@@ -1,14 +1,18 @@
 import { Container } from "@/components/layout/Container";
+import { formatPrice } from "@/lib/utils";
+
 import { SectionHeader, SHTitle, SHDescription } from "@/components/common/SectionHeader";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
-import { useShop } from "@/feature/shop/context/ShopContext";
+import { useShopStore } from "@/store/useShopStore";
 import { ShoppingBag, Star } from "lucide-react";
 import { Skeleton } from "@/components/ui/Skeleton";
-import type { Book } from "@/types";
+import type { Book } from "@/types/book";
 
 const FeaturedBooks = () => {
-  const { books, currency, isLoading } = useShop();
+  const books = useShopStore((state) => state.books);
+  const currency = useShopStore((state) => state.currency);
+  const isLoading = useShopStore((state) => state.isLoading);
 
   if (isLoading) {
     return (
@@ -72,8 +76,7 @@ const FeaturedBookDetail = ({ book, currency }: { book: Book; currency: string }
         <h3 className="text-2xl leading-tight font-bold tracking-tight sm:text-3xl">{book.title}</h3>
         <p className="text-muted-foreground text-sm font-medium">{book.author.name}</p>
         <p className="text-accent text-2xl font-bold">
-          {currency}
-          {book.details.price.replace("Rp ", "")}
+          {currency} {formatPrice(book.details.price)}
         </p>
       </div>
 
