@@ -10,9 +10,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import type { Book } from "@/types/book";
 
 const FeaturedBooks = () => {
-  const books = useShopStore((state) => state.books);
-  const currency = useShopStore((state) => state.currency);
-  const isLoading = useShopStore((state) => state.isLoading);
+  const { books, currency, isLoading } = useShopStore();
 
   if (isLoading) {
     return (

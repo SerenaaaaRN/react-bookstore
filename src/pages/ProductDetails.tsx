@@ -10,9 +10,7 @@ import { ProductInfo } from "@/components/shop/ProductInfo";
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const currency = useShopStore((state) => state.currency);
-  const isLoading = useShopStore((state) => state.isLoading);
-  const booksById = useShopStore((state) => state.booksById);
+  const { currency, isLoading, booksById } = useShopStore();
   const navigate = useNavigate();
   const book = id ? booksById[id] : undefined;
 

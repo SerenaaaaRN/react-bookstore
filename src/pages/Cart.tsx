@@ -11,9 +11,7 @@ import { CheckCircle2, Loader2, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const cartItems = useShopStore((state) => state.cartItems);
-  const currency = useShopStore((state) => state.currency);
-  const clearCart = useShopStore((state) => state.clearCart);
+  const { cartItems, currency, clearCart } = useShopStore();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();

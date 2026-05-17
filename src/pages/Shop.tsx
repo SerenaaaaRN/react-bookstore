@@ -7,11 +7,7 @@ import CategoryFilter from "@/components/shop/CategoryFilter";
 import { BookGrid } from "@/components/shop/BookGrid";
 
 const Shop = () => {
-  const books = useShopStore((state) => state.books);
-  const category = useShopStore((state) => state.category);
-  const setCategory = useShopStore((state) => state.setCategory);
-  const searchTerm = useShopStore((state) => state.searchTerm);
-  const isLoading = useShopStore((state) => state.isLoading);
+  const { books, category, setCategory, searchTerm, isLoading } = useShopStore();
 
   const [currentPage, setCurrentPage] = useState(1);
   const booksPerPage = 10;

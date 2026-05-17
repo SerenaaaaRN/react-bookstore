@@ -4,7 +4,6 @@ import "swiper/css";
 import { BookCard, BookCardSkeleton } from "@/components/common/BookCard";
 import type { Book } from "@/types/book";
 
-
 type BookSliderProps = SwiperProps & {
   books: Book[];
   fromHero?: string;
@@ -15,8 +14,8 @@ type BookSliderProps = SwiperProps & {
 const BookSlider = ({ className = "min-h-80", books, fromHero, isLoading, ...props }: BookSliderProps) => {
   return (
     <div className="relative">
-      <div className="pointer-events-none absolute top-0 left-0 z-10 h-full w-12 bg-background/80 to-transparent [mask-image:linear-gradient(to_right,black,transparent)]" />
-      <div className="pointer-events-none absolute top-0 right-0 z-10 h-full w-12 bg-background/80 to-transparent [mask-image:linear-gradient(to_left,black,transparent)]" />
+      <div className="bg-background/80 pointer-events-none absolute top-0 left-0 z-10 h-full w-12 to-transparent mask-[linear-gradient(to_right,black,transparent)]" />
+      <div className="bg-background/80 pointer-events-none absolute top-0 right-0 z-10 h-full w-12 to-transparent mask-[linear-gradient(to_left,black,transparent)]" />
       <Swiper
         autoplay={{ delay: 4000, disableOnInteraction: false }}
         breakpoints={{

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button";
 
 const SearchBar = () => {
   const [showSearch, setShowSearch] = useState<boolean>(false);
-  const setSearchTerm = useShopStore((state) => state.setSearchTerm);
+  const { setSearchTerm } = useShopStore();
 
   return (
     <div className="relative hidden items-center xl:flex">

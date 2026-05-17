@@ -4,8 +4,7 @@ import { SectionHeader, SHTitle, SHDescription } from "@/components/common/Secti
 import { useShopStore } from "@/store/useShopStore";
 
 const PopularBooks = () => {
-  const books = useShopStore((state) => state.books);
-  const isLoading = useShopStore((state) => state.isLoading);
+  const { books, isLoading } = useShopStore();
   const popularBooks = books.slice(3, 11);
 
   return (

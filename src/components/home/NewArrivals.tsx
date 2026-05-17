@@ -4,8 +4,7 @@ import { Container } from "@/components/layout/Container";
 import { SectionHeader, SHTitle, SHDescription } from "@/components/common/SectionHeader";
 
 const NewArrivals = () => {
-  const books = useShopStore((state) => state.books);
-  const isLoading = useShopStore((state) => state.isLoading);
+  const { books, isLoading } = useShopStore();
   const newArrivals = books.slice(13, 20);
 
   return (

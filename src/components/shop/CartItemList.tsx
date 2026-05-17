@@ -5,9 +5,7 @@ import { useShopStore } from "@/store/useShopStore";
 import { formatPrice } from "@/lib/utils";
 
 const CartItemList = ({ cartItems }: { cartItems: CartItem[] }) => {
-  const removeFromCart = useShopStore((state) => state.removeFromCart);
-  const updateQuantity = useShopStore((state) => state.updateQuantity);
-  const currency = useShopStore((state) => state.currency);
+  const { removeFromCart, updateQuantity, currency } = useShopStore();
 
   return (
     <div className="space-y-6">

@@ -14,7 +14,7 @@ type BookCardProps = ComponentProps<"div"> & {
 };
 
 const BookCard = ({ className, book, ...props }: BookCardProps) => {
-  const currency = useShopStore((state) => state.currency);
+  const { currency } = useShopStore();
 
   return (
     <Card className={cn("group overflow-hidden", className)} {...props}>

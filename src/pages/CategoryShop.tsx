@@ -8,8 +8,7 @@ import type { Book } from "@/types/book";
 
 const CategoryShop = () => {
   const { category } = useParams();
-  const books = useShopStore((state) => state.books);
-  const isLoading = useShopStore((state) => state.isLoading);
+  const { books, isLoading } = useShopStore();
 
   const filteredBooks = useMemo(() => {
     if (!category) return books;

@@ -1,11 +1,11 @@
-import { create } from "zustand";
-
+import { createContext, useContext, useState, useEffect } from "react";
 import type { Book } from "@/types/book";
 import type { CartItem } from "@/types/cart";
+import React from "react";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-type ShopState = {
+export type ShopState = {
   books: Book[];
   category: string;
   searchTerm: string;
@@ -27,71 +27,122 @@ type ShopState = {
   fetchBooks: () => Promise<void>;
 };
 
-export const useShopStore = create<ShopState>((set) => ({
-  books: [],
-  category: "All",
-  searchTerm: "",
-  currency: "Rp",
-  cartItems: [],
-  isLoading: true,
-  booksById: {},
+const ShopContext = createContext<ShopState | undefined>(undefined);
 
-  setBooks: (books) => set({ books }),
-  setCategory: (category) => set({ category }),
-  setSearchTerm: (searchTerm) => set({ searchTerm }),
-  setCartItems: (cartItems) => set({ cartItems }),
-  setIsLoading: (isLoading) => set({ isLoading }),
+export const ShopProvider = ({ children }: { children: React.ReactNode }) => {
+  const [books, setBooksState] = useState<Book[]>([]);
+  const [category, setCategoryState] = useState<string>("All");
+  const [searchTerm, setSearchTermState] = useState<string>("");
+  const [currency] = useState<string>("Rp");
+  const [cartItems, setCartItemsState] = useState<CartItem[]>([]);
+  const [isLoading, setIsLoadingState] = useState<boolean>(true);
+  const [booksById, setBooksById] = useState<Record<string, Book>>({});
 
-  addToCart: (book: Book, quantity: number = 1) => {
-    set((state) => {
-      const existing = state.cartItems.find((item) => item.book._id === book._id);
+  const setBooks = (books: Book[]) => {
+    setBooksState(books);
+  };
+
+  const setCategory = (category: string) => {
+    setCategoryState(category);
+  };
+
+  const setSearchTerm = (term: string) => {
+    setSearchTermState(term);
+  };
+
+  const setCartItems = (items: CartItem[]) => {
+    setCartItemsState(items);
+  };
+
+  const setIsLoading = (loading: boolean) => {
+    setIsLoadingState(loading);
+  };
+
+  const addToCart = (book: Book, quantity: number = 1) => {
+    setCartItemsState((prev) => {
+      const existing = prev.find((item) => item.book._id === book._id);
       if (existing) {
-        return {
-          cartItems: state.cartItems.map((item) =>
-            item.book._id === book._id ? { ...item, quantity: item.quantity + quantity } : item
-          ),
-        };
+        return prev.map((item) =>
+          item.book._id === book._id ? { ...item, quantity: item.quantity + quantity } : item
+        );
       }
-      return { cartItems: [...state.cartItems, { book, quantity }] };
+      return [...prev, { book, quantity }];
     });
-  },
+  };
 
-  removeFromCart: (bookId: string) => {
-    set((state) => ({
-      cartItems: state.cartItems.filter((item) => item.book._id !== bookId),
-    }));
-  },
+  const removeFromCart = (bookId: string) => {
+    setCartItemsState((prev) => prev.filter((item) => item.book._id !== bookId));
+  };
 
-  updateQuantity: (bookId: string, quantity: number) => {
-    set((state) => ({
-      cartItems: state.cartItems.map((item) =>
+  const updateQuantity = (bookId: string, quantity: number) => {
+    setCartItemsState((prev) =>
+      prev.map((item) =>
         item.book._id === bookId ? { ...item, quantity: Math.max(1, quantity) } : item
-      ),
-    }));
-  },
+      )
+    );
+  };
 
-  clearCart: () => set({ cartItems: [] }),
+  const clearCart = () => {
+    setCartItemsState([]);
+  };
 
-  fetchBooks: async () => {
-    set({ isLoading: true });
+  const fetchBooks = async () => {
+    setIsLoadingState(true);
     try {
       const res = await fetch(API_URL);
       if (!res.ok) throw new Error("Gagal mengambil data dari server");
       const data = await res.json();
+
       const formattedBooks = data.books.map((book: Book) => ({
         ...book,
         cover_image: book.cover_image || "/placeholder.svg",
       }));
-      const booksById = formattedBooks.reduce((acc: Record<string, Book>, book: Book) => {
+
+      const newBooksById = formattedBooks.reduce((acc: Record<string, Book>, book: Book) => {
         acc[book._id] = book;
         return acc;
       }, {});
 
-      set({ books: formattedBooks, booksById });
+      setBooksState(formattedBooks);
+      setBooksById(newBooksById);
     } catch (err) {
       console.error("Error fetching books:", err);
     } finally {
-      set({ isLoading: false });
+      setIsLoadingState(false);
     }
-  },
-}));
+  };
+
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  const value: ShopState = {
+    books,
+    category,
+    searchTerm,
+    currency,
+    cartItems,
+    isLoading,
+    booksById,
+    setBooks,
+    setCategory,
+    setSearchTerm,
+    setCartItems,
+    setIsLoading,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    clearCart,
+    fetchBooks,
+  };
+
+  return React.createElement(ShopContext.Provider, { value }, children);
+};
+
+export function useShopStore() {
+  const context = useContext(ShopContext);
+  if (!context) {
+    throw new Error("useShopStore must be used within a ShopProvider");
+  }
+  return context;
+}

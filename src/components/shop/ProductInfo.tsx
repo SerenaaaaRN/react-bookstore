@@ -16,7 +16,7 @@ const DetailItem = ({ label, value }: { label: string; value: string }) => (
 );
 
 const ProductInfo = ({ book, currency }: { book: Book; currency: string }) => {
-  const addToCart = useShopStore((state) => state.addToCart);
+  const { addToCart } = useShopStore();
   const navigate = useNavigate();
 
   const handleAddToCart = () => {

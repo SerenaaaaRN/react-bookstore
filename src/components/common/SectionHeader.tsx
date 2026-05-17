@@ -14,9 +14,7 @@ const SHTitle = ({ className, title, color, ...props }: SHTitleProps) => {
   return (
     <h3 className={cn("text-foreground text-3xl font-bold capitalize md:text-4xl lg:text-5xl", className)} {...props}>
       {title}
-      {color ? (
-        <span className="text-accent ml-3 font-extralight italic">{color}</span>
-      ) : null}
+      {color ? <span className="text-accent ml-3 font-extralight italic">{color}</span> : null}
     </h3>
   );
 };

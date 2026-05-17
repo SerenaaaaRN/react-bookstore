@@ -8,8 +8,7 @@ import type { Book } from "@/types/book";
 import { BookCard, BookCardSkeleton } from "@/components/common/BookCard";
 
 const Hero = () => {
-  const books = useShopStore((state) => state.books);
-  const isLoading = useShopStore((state) => state.isLoading);
+  const { books, isLoading } = useShopStore();
   const popularBooks = books.slice(4, 8);
 
   return (

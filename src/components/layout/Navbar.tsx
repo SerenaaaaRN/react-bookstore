@@ -15,7 +15,7 @@ const navLinks = [
 ];
 
 const Navbar = () => {
-  const cartItems = useShopStore((state) => state.cartItems);
+  const { cartItems } = useShopStore();
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
